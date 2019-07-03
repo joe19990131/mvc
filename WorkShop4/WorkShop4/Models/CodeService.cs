@@ -14,7 +14,7 @@ namespace WorkShop4.Models
         {
             DataTable dt = new DataTable();
             string sql = @"Select Distinct BOOK_CLASS_ID AS BookClassId ,BOOK_CLASS_NAME As BookClass 
-                           From BOOK_CLASS 
+                           From BOOK_CLASS ORDER BY BOOK_CLASS_NAME
                            ";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {
@@ -48,7 +48,7 @@ namespace WorkShop4.Models
         {
             DataTable dt = new DataTable();
             string sql = @"Select Distinct USER_ID AS UserId ,USER_ENAME As UserEname 
-                           From MEMBER_M 
+                           From MEMBER_M ORDER BY USER_ENAME
                            ";
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
             {

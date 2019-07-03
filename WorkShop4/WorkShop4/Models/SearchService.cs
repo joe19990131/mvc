@@ -25,7 +25,8 @@ namespace WorkShop4.Models
                             bd.BOOK_NAME AS BookName,
                             FORMAT(bd.BOOK_BOUGHT_DATE,'yyyy/MM/dd') AS BoughtDate,
                             bc.CODE_NAME AS BookStatus,
-                            ISNULL(mm.USER_ENAME,'') AS BookKeeper
+                            ISNULL(mm.USER_ENAME,'') AS BookKeeper,
+                            bd.BOOK_ID AS BookId
                            FROM
                             BOOK_DATA bd 
                             INNER JOIN BOOK_CLASS bcl ON bd.BOOK_CLASS_ID = bcl.BOOK_CLASS_ID
@@ -64,7 +65,7 @@ namespace WorkShop4.Models
                     BoughtDate = row["BoughtDate"].ToString(),
                     BookStatus = row["BookStatus"].ToString(),
                     BookKeeper = row["BookKeeper"].ToString(),
-                    
+                    BookId = (int)row["BookId"]
                 });
             }
             return result;
@@ -124,5 +125,49 @@ namespace WorkShop4.Models
          
         }
 
+        public List<Models.LendRecord> GetRecordByCondtioin(int bookId)
+        {
+            //sql更改
+            DataTable dt = new DataTable();
+            string sql = @"SELECT 
+                            FORMAT(blr.LEND_DATE,'yyyy/mm/dd') AS LendDate,
+                            blr.KEEPER_ID AS KeeperId,
+                            mm.USER_ENAME AS UserEname,
+                            mm.USER_CNAME AS UserCname
+                            FROM 
+                            BOOK_LEND_RECORD blr JOIN MEMBER_M mm
+                            ON blr.KEEPER_ID = mm.USER_ID
+                            WHERE blr.BOOK_ID = @BookId";
+
+            using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.Add(new SqlParameter("@BookId",bookId));
+               
+                SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
+                sqlAdapter.Fill(dt);
+                conn.Close();
+            }
+            return this.MapRecordDataToList(dt);
+        }
+
+        private List<LendRecord> MapRecordDataToList(DataTable dt)
+        {
+            List<Models.LendRecord> result = new List<LendRecord>();
+            foreach (DataRow row in dt.Rows)
+            {
+                result.Add(new LendRecord()
+                {
+                    LendDate = row["LendDate"].ToString(),
+                    KeeperId = row["KeeperId"].ToString(),
+                    UserEname = row["UserEname"].ToString(),
+                    UserCname = row["UserCname"].ToString()
+
+                    
+                });
+            }
+            return result;
+        }
     }
 }

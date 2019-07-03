@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="Models\books.cs" />
     <Compile Include="Models\CodeService.cs" />
+    <Compile Include="Models\LendRecord.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\SearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,6 +125,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Main\InsertBook.cshtml" />
+    <Content Include="Views\Main\LendRecord.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

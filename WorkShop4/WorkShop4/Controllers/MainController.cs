@@ -48,11 +48,11 @@ namespace WorkShop4.Controllers
         }
 
 
-       [HttpGet()]
-       public ActionResult InsertBook()
+        [HttpGet()]
+        public ActionResult InsertBook()
         {
             ViewBag.BookClassCodeData = this.codeService.GetClassCodeTable();
-            
+
             return View(new Models.Books());
         }
 
@@ -69,6 +69,23 @@ namespace WorkShop4.Controllers
             }
             return View(book);
         }
+
+        [HttpGet()]
+        public ActionResult LendRecord()
+        {
+            return View();
+        }
+
+        [HttpPost()]
+        public ActionResult LendRecord(int bookId)
+        {
+            Models.SearchService searchService = new Models.SearchService();
+            ViewBag.LendRecord = searchService.GetRecordByCondtioin(bookId);
+            return View("LendRecord");
+        }
+
+       
+
     }
    
 }
