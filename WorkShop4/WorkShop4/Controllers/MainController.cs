@@ -60,13 +60,12 @@ namespace WorkShop4.Controllers
         public ActionResult InsertBook(Models.Books book)
         {
             ViewBag.BookData = this.codeService.GetClassCodeTable();
-            if (ModelState.IsValid)
-            {
+          
                 Models.SearchService searchService = new Models.SearchService();
                 ViewBag.BookClassCodeData = this.codeService.GetClassCodeTable();
                 searchService.InsertBook(book);
                 TempData["message"] = "存檔成功";
-            }
+            
             return View(book);
         }
 

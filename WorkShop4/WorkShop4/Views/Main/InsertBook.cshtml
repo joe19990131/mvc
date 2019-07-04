@@ -47,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BookNote, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.BookNote, new { @class = "form-control" })
+                @Html.TextAreaFor(model => model.BookNote, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.BookNote, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -66,7 +66,7 @@
             @Html.LabelFor(model => model.BookClassId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.BookClassId, (List<SelectListItem>)ViewBag.BookClassCodeData, "請選擇", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BookClassId)
+                @Html.ValidationMessageFor(model => model.BookClassId, "",new {@class = "text-danger"})
             </div>
         </div>
 

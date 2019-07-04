@@ -46,8 +46,8 @@
         </div>
         <div class="col-md-10">
             <input type="submit" value="查詢" class=" btn btn-primary"/>
-            <input type="button" value=" 新增" class="btn btn-default" onclick="location.href='/Main/InsertBook'">
-            <input type="button" value=" 清除" class="btn btn-default" onclick="location.href='/Main/SearchBook'">
+            <input type="button" value="新增" class="btn btn-default" onclick="location.href='/Main/InsertBook'">
+            <input type="button" value="清除" class="btn btn-default" onclick="location.href='/Main/SearchBook'">
         </div>
     </div>
 
@@ -81,7 +81,13 @@
                             <button type="submit" class=" btn btn-default">借閱紀錄</button>
                             }
                         </td>
-                       
+                        <td>
+                            <form></form>
+                           
+                                <input class="hidBookName" type="hidden" id="BookId" name="BookId" value='@item.BookId' />
+                                <button type="submit" class=" btn btn-default">編輯</button>
+                            
+                        </td>
                         <td>
                             <button class="btnDelete btn btn-danger" href="#" >刪除</button>
                             <input class="hidBookName" type="hidden" value='@item.BookId' />
@@ -98,9 +104,9 @@
     $(document).ready(function () {
         $(".btnDelete").click(function (e) {
             e.preventDefault();
-            var r = confirm("確定嗎??")
-            var tr = $(this).closest('tr')
-            if (r == true) {
+            
+            if (confirm("確定嗎??")) {
+                var tr = $(this).closest('tr')
                 $.ajax({
                     type: "POST",
                     url: "/Main/DeleteBook",

@@ -36,6 +36,7 @@ namespace WorkShop4.Models
                         and bd.BOOK_CLASS_ID LIKE @BookClassId+'%'
                         and ISNULL(mm.USER_ENAME,'') LIKE '%'+@BookKeeper+'%'
                         and bc.CODE_NAME LIKE @BookStatus+'%'
+                    order by FORMAT(bd.BOOK_BOUGHT_DATE,'yyyy/MM/dd') DESC
                            ";
 
             using (SqlConnection conn = new SqlConnection(this.GetDBConnectionString()))
@@ -116,7 +117,7 @@ namespace WorkShop4.Models
                 cmd.Parameters.Add(new SqlParameter("@BookAuthor", arg.BookAuthor == null ? string.Empty : arg.BookAuthor));
                 cmd.Parameters.Add(new SqlParameter("@BookPublisher", arg.BookPublisher == null ? string.Empty : arg.BookPublisher));
                 cmd.Parameters.Add(new SqlParameter("@BookNote", arg.BookNote == null ? string.Empty : arg.BookNote));
-                cmd.Parameters.Add(new SqlParameter("@BoughtDate", arg.BoughtDate == null ? "1900/01/01" : arg.BoughtDate));
+                cmd.Parameters.Add(new SqlParameter("@BoughtDate", arg.BoughtDate == null ? (object)DBNull.Value : arg.BoughtDate));
                 cmd.Parameters.Add(new SqlParameter("@BookClassId", arg.BookClassId == null ? string.Empty : arg.BookClassId));
                 SqlDataAdapter sqlAdapter = new SqlDataAdapter(cmd);
                 sqlAdapter.Fill(dt);
@@ -130,12 +131,12 @@ namespace WorkShop4.Models
             //sql更改
             DataTable dt = new DataTable();
             string sql = @"SELECT 
-                            FORMAT(blr.LEND_DATE,'yyyy/mm/dd') AS LendDate,
+                            FORMAT(blr.LEND_DATE,'yyyy/MM/dd') AS LendDate,
                             blr.KEEPER_ID AS KeeperId,
                             mm.USER_ENAME AS UserEname,
                             mm.USER_CNAME AS UserCname
                             FROM 
-                            BOOK_LEND_RECORD blr JOIN MEMBER_M mm
+                            BOOK_LEND_RECORD blr INNER JOIN MEMBER_M mm
                             ON blr.KEEPER_ID = mm.USER_ID
                             WHERE blr.BOOK_ID = @BookId";
 

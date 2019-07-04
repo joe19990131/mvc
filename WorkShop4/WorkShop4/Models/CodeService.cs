@@ -27,7 +27,7 @@ namespace WorkShop4.Models
             }
             return this.MapBookClassData(dt);
         }
-        //Map未改
+     
         private List<SelectListItem> MapBookClassData(DataTable dt)
         {
             List<SelectListItem> result = new List<SelectListItem>();
